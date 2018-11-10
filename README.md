@@ -1,11 +1,14 @@
-# ANRProxyGenerator
+# ANRProxyGenerator-HQ
 
-Tool to generate printout-ready images of entire Android:NetRunner decklists from netrunner.db for the purpose of proxying.
+Tool to generate printout-ready High Quality images of Android:NetRunner cards for the purpose of proxying.
+A forked version of ANRProxyGenerator that uses the image files from /u/LepcisMagna's Netrunner scans:
+[https://redd.it/8pgfbj](https://redd.it/8pgfbj)
 
 Usage:
-`ANRProxyGenerator.py -d <deck id>`
+`ANRProxyGenerator-HQ.py`
 
-Where deck id is the numeric identifier of the deck on netrunner.db. e.g. for https://netrunnerdb.com/en/deck/view/752593 the deck id is 752593.
+Prompts for a directory of jpg and produces a pdf in the same directory.
+Print pdf at 100% on letter size page.
 
 Python Library Requirements (both found in pip):
 Requests
