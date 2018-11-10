@@ -29,10 +29,11 @@ def main(argv):
     for filename in glob.glob(image_path + '/*.jpg'):
         card_picture = Image.open(filename)
 
-        # Create a list of all pictures to be printed, uncomment below if printing a pack/box
+        # Create a list of all pictures to be printed
+        # Adds 3 copies of each card, comment lines 35 and 36 if you need one copy of each picture
         proxy_list.append(card_picture)
-        #proxy_list.append(card_picture) 
-        #proxy_list.append(card_picture)
+        proxy_list.append(card_picture) 
+        proxy_list.append(card_picture)
             
     proxy_index = 0
     sheet_list = []
@@ -62,7 +63,7 @@ def main(argv):
         sheet_list.append(sheet)
         #sheet.save(os.path.basename(image_path) + "_" + str(sheet_count)+ '.png', 'PNG', quality=100)
 
-    sheet_list[0].save(os.path.basename(image_path) + '.pdf', quality=100, resolution=600, optimize=True, save_all=True, append_images=sheet_list[1:])
+    sheet_list[0].save(os.path.basename(image_path) + '.pdf', quality=90, resolution=600, optimize=True, save_all=True, append_images=sheet_list[1:])
 
 if __name__ == "__main__":
     main(sys.argv[1:])
