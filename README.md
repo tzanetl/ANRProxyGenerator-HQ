@@ -10,8 +10,7 @@ Usage:
 Prompts for a directory of jpg and produces a pdf in the same directory.
 Print pdf at 100% on letter size page.
 
-If the script fails with "MemoryError", try running it with 64-bit Python. This allowed me to generate a pdf of the Revised Core Set with 3 copies of each card. 
+If the script fails with "MemoryError", try running it with 64-bit Python. This should allow it to generate a pdf of the Revised Core Set with 3 copies of each card. 
 
-Python Library Requirements (both found in pip):
-Requests
-Pillow
+Requires Pillow to run, install with: 
+pip install pillow
