@@ -29,11 +29,10 @@ def main(argv):
     for filename in glob.glob(image_path + '/*.jpg'):
         card_picture = Image.open(filename)
 
-        # Create a list of all pictures to be printed
-        # Adds 3 copies of each card, comment lines 35 and 36 if you need one copy of each picture
+        # Create a list of all pictures to be printed, uncomment below if printing a pack/box
         proxy_list.append(card_picture)
-        proxy_list.append(card_picture) 
-        proxy_list.append(card_picture)
+        #proxy_list.append(card_picture) 
+        #proxy_list.append(card_picture)
             
     proxy_index = 0
     sheet_list = []
