@@ -2,7 +2,7 @@
 # https://redd.it/8pgfbj
 
 # Prompts for directory of image files, produces pdf file
-# Print pdf at 100% on letter size page. 
+# Print pdf at 100% on letter size page.
 
 from PIL import Image
 import math
@@ -26,22 +26,22 @@ def main(argv):
     image_path = filedialog.askdirectory()
 
     proxy_list = []
-    for filename in glob.glob(image_path + '/*.jpg'):
+    file_list = sorted(glob.glob(image_path + '/*.jpg'))
+    for filename in file_list:
         card_picture = Image.open(filename)
 
         # Create a list of all pictures to be printed, uncomment below if printing a pack/box
         proxy_list.append(card_picture)
-        #proxy_list.append(card_picture) 
-        #proxy_list.append(card_picture)
-            
+
     proxy_index = 0
     sheet_list = []
+    page_count = math.ceil(float(len(proxy_list)) / 9.0)
 
-    for _ in range (0, math.ceil(len(proxy_list)/9)): #how many pages do we need?
+    for _ in range (0, int(page_count)): #how many pages do we need?
         y_offset = 200
         x_offset = 200
         #a sheet is 3 rows of 3 cards
-        sheet = Image.new('RGB', ((x_offset+hori_spacing)*2+resize_width*3, (y_offset+vert_spacing)*2+resize_height*3), (255, 255, 255)) 
+        sheet = Image.new('RGB', ((x_offset+hori_spacing)*2+resize_width*3, (y_offset+vert_spacing)*2+resize_height*3), (255, 255, 255))
         # Fill three rows of three images
         rows = [Image.new('RGB', ((x_offset+hori_spacing)*2+resize_width*3, resize_height), (255, 255, 255))] * 3
         for row in rows:
