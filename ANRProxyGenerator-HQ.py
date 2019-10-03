@@ -26,7 +26,8 @@ def main(argv):
     image_path = filedialog.askdirectory()
 
     proxy_list = []
-    for filename in glob.glob(image_path + '/*.jpg'):
+    file_list = sorted(glob.glob(image_path + '/*.jpg'))
+    for filename in file_list:
         card_picture = Image.open(filename)
 
         # Create a list of all pictures to be printed, uncomment below if printing a pack/box
