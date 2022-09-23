@@ -1,2 +1,5 @@
-.idea/
+# Images
 *.png
+*.jpg
+
+.idea/
