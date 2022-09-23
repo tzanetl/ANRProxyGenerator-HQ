@@ -21,9 +21,12 @@ vert_spacing = 0    #best between 0 to 50, otherwise images might fall off the p
 
 
 def main(argv):
-    root = tk.Tk()
-    root.withdraw()
-    image_path = filedialog.askdirectory()
+    if not argv:
+        root = tk.Tk()
+        root.withdraw()
+        image_path = filedialog.askdirectory()
+    else:
+        image_path = argv[0]
 
     proxy_list = []
     file_list = sorted(glob.glob(image_path + '/*.jpg'))
