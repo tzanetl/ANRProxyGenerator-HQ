@@ -80,9 +80,9 @@ def main(image_path=None, n_each=3):
     for i in range(10):
         try:
             if i == 0:
-                pdf_name = f"{image_path.name}.pdf"
+                pdf_name = image_path.joinpath("proxy.pdf")
             else:
-                pdf_name = f"{image_path.name} ({i}).pdf"
+                pdf_name = image_path.joinpath(f"proxy ({i}).pdf")
             sheet_list[0].save(
                 pdf_name,
                 quality=90,
