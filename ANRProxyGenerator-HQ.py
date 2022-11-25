@@ -4,13 +4,13 @@
 # Prompts for directory of image files, produces pdf file
 # Print pdf at 100% on letter size page.
 
-from PIL import Image
 import math
+from pathlib import Path
 import sys
-import glob
-import os
 import tkinter as tk
 from tkinter import filedialog
+
+from PIL import Image
 
 resize_height = 2100
 resize_width = 1460
@@ -24,12 +24,12 @@ def main(argv):
     if not argv:
         root = tk.Tk()
         root.withdraw()
-        image_path = filedialog.askdirectory()
+        image_path = Path(filedialog.askdirectory())
     else:
-        image_path = argv[0]
+        image_path = Path(argv[0])
 
     proxy_list = []
-    file_list = sorted(glob.glob(image_path + '/*.jpg'))
+    file_list = sorted(image_path.glob("*.jpg"))
     for filename in file_list:
         card_picture = Image.open(filename)
         card_picture = card_picture.resize((resize_width, resize_height))
@@ -66,7 +66,7 @@ def main(argv):
         sheet_list.append(sheet)
         #sheet.save(os.path.basename(image_path) + "_" + str(sheet_count)+ '.png', 'PNG', quality=100)
 
-    sheet_list[0].save(os.path.basename(image_path) + '.pdf', quality=90, resolution=600, optimize=True, save_all=True, append_images=sheet_list[1:])
+    sheet_list[0].save(f"{image_path.name}.pdf", quality=90, resolution=600, optimize=True, save_all=True, append_images=sheet_list[1:])
 
 if __name__ == "__main__":
     main(sys.argv[1:])
