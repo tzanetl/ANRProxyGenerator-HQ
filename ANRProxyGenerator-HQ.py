@@ -56,14 +56,12 @@ def main(argv):
             (255, 255, 255))
 
         # Fill three rows of three images
-        rows = [
-            Image.new(
+        for _ in range(3):
+            row = Image.new(
                 'RGB',
                 ((x_offset+hori_spacing)*2+resize_width*3, resize_height),
                 (255, 255, 255)
             )
-        ] * 3
-        for row in rows:
             x_offset = 200
             for j in range (proxy_index, proxy_index+3):
                 if j >= len(proxy_list):
