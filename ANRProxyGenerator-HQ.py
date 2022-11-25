@@ -13,12 +13,12 @@ from tkinter import filedialog
 from PIL import Image
 
 
-resize_height = 2100
-resize_width = 1460
+RESIZE_HEIGHT = 2100
+RESIZE_WIDTH = 1460
 
-#spacing between cards
-hori_spacing = 0
-vert_spacing = 0    #best between 0 to 50, otherwise images might fall off the page
+# spacing between cards
+HORI_SPACING = 0
+VERT_SPACING = 0  # best between 0 to 50, otherwise images might fall off the page
 
 
 def main(argv):
@@ -37,7 +37,7 @@ def main(argv):
 
     for filename in sorted(file_list):
         card_picture = Image.open(filename)
-        card_picture = card_picture.resize((resize_width, resize_height))
+        card_picture = card_picture.resize((RESIZE_WIDTH, RESIZE_HEIGHT))
 
         # Create a list of all pictures to be printed, uncomment below if printing a pack/box
         proxy_list.append(card_picture)
@@ -52,14 +52,14 @@ def main(argv):
         # a sheet is 3 rows of 3 cards
         sheet = Image.new(
             'RGB',
-            ((x_offset+hori_spacing)*2+resize_width*3, (y_offset+vert_spacing)*2+resize_height*3),
+            ((x_offset+HORI_SPACING)*2+RESIZE_WIDTH*3, (y_offset+VERT_SPACING)*2+RESIZE_HEIGHT*3),
             (255, 255, 255))
 
         # Fill three rows of three images
         for _ in range(3):
             row = Image.new(
                 'RGB',
-                ((x_offset+hori_spacing)*2+resize_width*3, resize_height),
+                ((x_offset+HORI_SPACING)*2+RESIZE_WIDTH*3, RESIZE_HEIGHT),
                 (255, 255, 255)
             )
             x_offset = 200
@@ -67,11 +67,11 @@ def main(argv):
                 if j >= len(proxy_list):
                     break
                 row.paste(proxy_list[j], (x_offset,0))
-                x_offset += resize_width + hori_spacing
+                x_offset += RESIZE_WIDTH + HORI_SPACING
 
             # Combine rows vertically into one image
             sheet.paste(row, (0, y_offset))
-            y_offset += resize_height + vert_spacing
+            y_offset += RESIZE_HEIGHT + VERT_SPACING
             proxy_index += 3
             if proxy_index >= len(proxy_list):
                 break
