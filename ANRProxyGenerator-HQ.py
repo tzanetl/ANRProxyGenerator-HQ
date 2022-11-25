@@ -22,7 +22,7 @@ HORI_SPACING = 0
 VERT_SPACING = 0  # best between 0 to 50, otherwise images might fall off the page
 
 
-def main(image_path=None):
+def main(image_path=None, n_each=3):
     if not image_path:
         root = tk.Tk()
         root.withdraw()
@@ -41,7 +41,7 @@ def main(image_path=None):
         card_picture = card_picture.resize((RESIZE_WIDTH, RESIZE_HEIGHT))
 
         # Create a list of all pictures to be printed, uncomment below if printing a pack/box
-        proxy_list.append(card_picture)
+        proxy_list.extend([card_picture] * n_each)
 
     proxy_index = 0
     sheet_list = []
@@ -96,6 +96,9 @@ def cli(argv):
         argument_default=argparse.SUPPRESS
     )
     parser.add_argument("-d", action="store", dest="image_path", help="Image directory")
+    parser.add_argument(
+        "-n", action="store", dest="n_each", help="N of each card", type=int, default=3
+    )
 
     parsed_args = parser.parse_args(argv)
     main(**vars(parsed_args))
