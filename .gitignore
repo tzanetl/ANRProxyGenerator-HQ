@@ -6,6 +6,6 @@
 # VS Code
 .vscode
 
-cards.pdf
+*.pdf
 
 .idea/
