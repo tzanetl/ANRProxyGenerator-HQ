@@ -16,7 +16,7 @@ resize_height = 2100
 resize_width = 1460
 
 #spacing between cards
-hori_spacing = 100
+hori_spacing = 0
 vert_spacing = 0    #best between 0 to 50, otherwise images might fall off the page
 
 
@@ -32,6 +32,7 @@ def main(argv):
     file_list = sorted(glob.glob(image_path + '/*.jpg'))
     for filename in file_list:
         card_picture = Image.open(filename)
+        card_picture = card_picture.resize((resize_width, resize_height))
 
         # Create a list of all pictures to be printed, uncomment below if printing a pack/box
         proxy_list.append(card_picture)
