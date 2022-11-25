@@ -4,6 +4,7 @@ https://redd.it/8pgfbj
 Prompts for directory of image files, produces pdf file
 Print pdf at 100% on letter size page.
 """
+import argparse
 import math
 from pathlib import Path
 import sys
@@ -21,13 +22,13 @@ HORI_SPACING = 0
 VERT_SPACING = 0  # best between 0 to 50, otherwise images might fall off the page
 
 
-def main(argv):
-    if not argv:
+def main(image_path=None):
+    if not image_path:
         root = tk.Tk()
         root.withdraw()
         image_path = Path(filedialog.askdirectory())
     else:
-        image_path = Path(argv[0])
+        image_path = Path(image_path)
 
     proxy_list = []
     card_image_extensions = ("*.jpg", "*.jpeg", "*.png")
@@ -89,5 +90,16 @@ def main(argv):
     )
 
 
+def cli(argv):
+    parser = argparse.ArgumentParser(
+        prog="ANR Proxy Generator",
+        argument_default=argparse.SUPPRESS
+    )
+    parser.add_argument("-d", action="store", dest="image_path", help="Image directory")
+
+    parsed_args = parser.parse_args(argv)
+    main(**vars(parsed_args))
+
+
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    cli(sys.argv[1:])
