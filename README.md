@@ -6,10 +6,10 @@ scans: \
 [https://redd.it/8pgfbj](https://redd.it/8pgfbj)
 
 Usage: \
-`ANRProxyGenerator-HQ.py`
+`anr_proxy.py`
 
 For CLI see: \
-`ANRProxyGenerator-HQ.py -h`
+`anr_proxy.py -h`
 
 Prompts for a directory of jpg and produces a pdf in the same directory.
 Print pdf at 100% on letter size page.
