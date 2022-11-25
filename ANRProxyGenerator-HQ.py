@@ -30,8 +30,12 @@ def main(argv):
         image_path = Path(argv[0])
 
     proxy_list = []
-    file_list = sorted(image_path.glob("*.jpg"))
-    for filename in file_list:
+    card_image_extensions = ("*.jpg", "*.jpeg", "*.png")
+    file_list = []
+    for ext in card_image_extensions:
+        file_list.extend(image_path.glob(ext))
+
+    for filename in sorted(file_list):
         card_picture = Image.open(filename)
         card_picture = card_picture.resize((resize_width, resize_height))
 
