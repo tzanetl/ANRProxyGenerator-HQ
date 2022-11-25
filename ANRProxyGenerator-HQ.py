@@ -41,13 +41,23 @@ def main(argv):
     sheet_list = []
     page_count = math.ceil(float(len(proxy_list)) / 9.0)
 
-    for _ in range (0, int(page_count)): #how many pages do we need?
+    for _ in range (0, int(page_count)): # how many pages do we need?
         y_offset = 200
         x_offset = 200
-        #a sheet is 3 rows of 3 cards
-        sheet = Image.new('RGB', ((x_offset+hori_spacing)*2+resize_width*3, (y_offset+vert_spacing)*2+resize_height*3), (255, 255, 255))
+        # a sheet is 3 rows of 3 cards
+        sheet = Image.new(
+            'RGB',
+            ((x_offset+hori_spacing)*2+resize_width*3, (y_offset+vert_spacing)*2+resize_height*3),
+            (255, 255, 255))
+
         # Fill three rows of three images
-        rows = [Image.new('RGB', ((x_offset+hori_spacing)*2+resize_width*3, resize_height), (255, 255, 255))] * 3
+        rows = [
+            Image.new(
+                'RGB',
+                ((x_offset+hori_spacing)*2+resize_width*3, resize_height),
+                (255, 255, 255)
+            )
+        ] * 3
         for row in rows:
             x_offset = 200
             for j in range (proxy_index, proxy_index+3):
@@ -64,9 +74,17 @@ def main(argv):
                 break
 
         sheet_list.append(sheet)
-        #sheet.save(os.path.basename(image_path) + "_" + str(sheet_count)+ '.png', 'PNG', quality=100)
+        # sheet.save(f"{image_path.name}_{str(sheet_count)}.png"", 'PNG', quality=100)
 
-    sheet_list[0].save(f"{image_path.name}.pdf", quality=90, resolution=600, optimize=True, save_all=True, append_images=sheet_list[1:])
+    sheet_list[0].save(
+        f"{image_path.name}.pdf",
+        quality=90,
+        resolution=600,
+        optimize=True,
+        save_all=True,
+        append_images=sheet_list[1:]
+    )
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])
