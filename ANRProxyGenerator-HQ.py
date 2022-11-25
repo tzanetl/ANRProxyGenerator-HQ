@@ -1,9 +1,9 @@
-# Script designed to print /u/LepcisMagna's Netrunner scans
-# https://redd.it/8pgfbj
+"""Script designed to print /u/LepcisMagna's Netrunner scans
+https://redd.it/8pgfbj
 
-# Prompts for directory of image files, produces pdf file
-# Print pdf at 100% on letter size page.
-
+Prompts for directory of image files, produces pdf file
+Print pdf at 100% on letter size page.
+"""
 import math
 from pathlib import Path
 import sys
@@ -11,6 +11,7 @@ import tkinter as tk
 from tkinter import filedialog
 
 from PIL import Image
+
 
 resize_height = 2100
 resize_width = 1460
