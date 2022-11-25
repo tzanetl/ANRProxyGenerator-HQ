@@ -11,7 +11,7 @@ import sys
 import tkinter as tk
 from tkinter import filedialog
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 
 RESIZE_HEIGHT = 2100
@@ -48,37 +48,34 @@ def main(image_path=None, n_each=3):
     page_count = math.ceil(float(len(proxy_list)) / 9.0)
 
     for _ in range (0, int(page_count)): # how many pages do we need?
+        # a sheet is 3 rows of 3 cards
         y_offset = 200
         x_offset = 200
-        # a sheet is 3 rows of 3 cards
-        sheet = Image.new(
-            'RGB',
-            ((x_offset+HORI_SPACING)*2+RESIZE_WIDTH*3, (y_offset+VERT_SPACING)*2+RESIZE_HEIGHT*3),
-            (255, 255, 255))
+        sheet = sheet_with_grid(x_offset, y_offset)
 
         # Fill three rows of three images
         for _ in range(3):
             row = Image.new(
                 'RGB',
-                ((x_offset+HORI_SPACING)*2+RESIZE_WIDTH*3, RESIZE_HEIGHT),
+                (HORI_SPACING * 2 + RESIZE_WIDTH * 3, RESIZE_HEIGHT),
                 (255, 255, 255)
             )
-            x_offset = 200
+            row_x_offset = 0
             for j in range (proxy_index, proxy_index+3):
                 if j >= len(proxy_list):
                     break
-                row.paste(proxy_list[j], (x_offset,0))
-                x_offset += RESIZE_WIDTH + HORI_SPACING
+                row.paste(proxy_list[j], (row_x_offset, 0))
+                row_x_offset += RESIZE_WIDTH + HORI_SPACING
 
             # Combine rows vertically into one image
-            sheet.paste(row, (0, y_offset))
+            sheet.paste(row, (x_offset, y_offset))
             y_offset += RESIZE_HEIGHT + VERT_SPACING
             proxy_index += 3
             if proxy_index >= len(proxy_list):
                 break
 
         sheet_list.append(sheet)
-        # sheet.save(f"{image_path.name}_{str(sheet_count)}.png"", 'PNG', quality=100)
+        # sheet.save(f"{image_path.name}_{i}.png", 'PNG', quality=100)
 
     sheet_list[0].save(
         f"{image_path.name}.pdf",
@@ -88,6 +85,31 @@ def main(image_path=None, n_each=3):
         save_all=True,
         append_images=sheet_list[1:]
     )
+
+
+def sheet_with_grid(x_offset, y_offset):
+    # a sheet is 3 rows of 3 cards
+    sheet = Image.new(
+        'RGB',
+        ((x_offset+HORI_SPACING)*2+RESIZE_WIDTH*3, (y_offset+VERT_SPACING)*2+RESIZE_HEIGHT*3),
+        (255, 255, 255))
+
+    # Draw card grid
+    draw = ImageDraw.Draw(sheet)
+    y_start = 0
+    y_end = sheet.height
+    x_start = 0
+    x_end = sheet.width
+
+    for card_i, spacing_i in zip((0, 1, 1, 2, 2, 3), (0, 0, 1, 1, 2, 2)):
+        x = x_offset + card_i * RESIZE_WIDTH + spacing_i * HORI_SPACING
+        line = ((x, y_start), (x, y_end))
+        draw.line(line, fill="black", width=5)
+        y = y_offset + card_i * RESIZE_HEIGHT + spacing_i * VERT_SPACING
+        line = ((x_start, y), (x_end, y))
+        draw.line(line, fill="black", width=5)
+
+    return sheet
 
 
 def cli(argv):
