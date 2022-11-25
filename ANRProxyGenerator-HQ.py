@@ -77,14 +77,23 @@ def main(image_path=None, n_each=3):
         sheet_list.append(sheet)
         # sheet.save(f"{image_path.name}_{i}.png", 'PNG', quality=100)
 
-    sheet_list[0].save(
-        f"{image_path.name}.pdf",
-        quality=90,
-        resolution=600,
-        optimize=True,
-        save_all=True,
-        append_images=sheet_list[1:]
-    )
+    for i in range(10):
+        try:
+            if i == 0:
+                pdf_name = f"{image_path.name}.pdf"
+            else:
+                pdf_name = f"{image_path.name} ({i}).pdf"
+            sheet_list[0].save(
+                pdf_name,
+                quality=90,
+                resolution=600,
+                optimize=True,
+                save_all=True,
+                append_images=sheet_list[1:]
+            )
+            break
+        except PermissionError:
+            print(f"{pdf_name} already exists")
 
 
 def sheet_with_grid(x_offset, y_offset):
