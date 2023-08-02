@@ -3,6 +3,7 @@
 example: https://nullsignal.games/blog/the-automata-initiative-is-out-now/
 """
 import argparse
+import itertools
 from pathlib import Path
 import sys
 
@@ -11,7 +12,7 @@ import requests
 
 
 class ReleasePage:
-    def __init__(self, soup):
+    def __init__(self, soup: BeautifulSoup):
         self.soup = soup
 
     @classmethod
@@ -24,11 +25,18 @@ class ReleasePage:
         for element in self.soup.find_all("img", attrs={"data-id": True, "data-full-url": True}):
             yield int(element.attrs["data-id"]), element.attrs["data-full-url"]
 
+    def iter_neurals(self):
+        for element in self.soup.find_all("figure", class_="aligncenter size-full is-resized"):
+            img_element = element.find_next("img", attrs={"src": True})
+            data_full_url: str = img_element.attrs["src"]
+            data_id = data_full_url.rsplit("/", maxsplit=1)[1].rsplit("-", maxsplit=1)[0]
+            yield int(data_id), data_full_url
+
 
 def main(url, output):
     output = Path(output)
     rp = ReleasePage.from_url(url)
-    for data_id, card_url in rp.iter_cards():
+    for data_id, card_url in itertools.chain(rp.iter_cards(), rp.iter_neurals()):
         file_ext = card_url.rsplit(".", maxsplit=1)[1]
         file_name = f"{data_id}.{file_ext}"
         card_output = output.joinpath(file_name)
