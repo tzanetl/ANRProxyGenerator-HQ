@@ -31,6 +31,10 @@ def main(url, output):
     for data_id, card_url in rp.iter_cards():
         file_ext = card_url.rsplit(".", maxsplit=1)[1]
         file_name = f"{data_id}.{file_ext}"
+        card_output = output.joinpath(file_name)
+        if card_output.exists():
+            print(f"{card_output.resolve()} already exists")
+            continue
         with open(output.joinpath(file_name), mode="wb") as fs:
             for chunk in requests.request("GET", card_url, stream=True).iter_content(1024):
                 fs.write(chunk)
